@@ -11,10 +11,25 @@ get { request in
     return "Hello World"
 }
 
+let userManager = UserManager()
+
 // Handle GET requests to path /users/{username}
 get("users", *) { (request, username: String) in
-    return "Hello \(username)"
+    userManager.addUser(username, lastName: "")
+    
+    let returnString = "Success!" + "\n\n\n" + userManager.allUsers()
+    
+    return returnString
 }
+
+get("users") { request in
+    return userManager.allUsers()
+}
+
+get("users", "search") { request in
+    return "Search: " + userManager.allUsers()
+}
+
 
 //
 //serve { request in
